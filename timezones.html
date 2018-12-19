@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Gradient Timezones</title>
+    <!--
+
+        Another fine...
+
+        #############################################################################################################################################
+        ## |||| https://mykraken.tech |||| https://mykraken.tech |||| https://mykraken.tech |||| https://mykraken.tech |||| https://mykraken.tech  ##
+        #############################################################################################################################################
+        ##    /$$$$$$        /$$                               /$$$$$$$  /$$           /$$                                                         ##
+        ##  /$$__  $$      | $$                              | $$__  $$|__/          | $$                                                          ##
+        ## | $$  \ $$  /$$$$$$$  /$$$$$$  /$$$$$$/$$$$       | $$  \ $$ /$$  /$$$$$$$| $$   /$$  /$$$$$$   /$$$$$$   /$$$$$$$  /$$$$$$  /$$$$$$$   ##
+        ## | $$$$$$$$ /$$__  $$ |____  $$| $$_  $$_  $$      | $$  | $$| $$ /$$_____/| $$  /$$/ /$$__  $$ /$$__  $$ /$$_____/ /$$__  $$| $$__  $$  ##
+        ## | $$__  $$| $$  | $$  /$$$$$$$| $$ \ $$ \ $$      | $$  | $$| $$| $$      | $$$$$$/ | $$$$$$$$| $$  \__/|  $$$$$$ | $$  \ $$| $$  \ $$  ##
+        ## | $$  | $$| $$  | $$ /$$__  $$| $$ | $$ | $$      | $$  | $$| $$| $$      | $$_  $$ | $$_____/| $$       \____  $$| $$  | $$| $$  | $$  ##
+        ## | $$  | $$|  $$$$$$$|  $$$$$$$| $$ | $$ | $$      | $$$$$$$/| $$|  $$$$$$$| $$ \  $$|  $$$$$$$| $$       /$$$$$$$/|  $$$$$$/| $$  | $$  ##
+        ## |__/  |__/ \_______/ \_______/|__/ |__/ |__/      |_______/ |__/ \_______/|__/  \__/ \_______/|__/      |_______/  \______/ |__/  |__/  ##
+        #############################################################################################################################################
+        ## https://mykraken.tech |||| https://mykraken.tech |||| https://mykraken.tech |||| https://mykraken.tech |||| https://mykraken.tech ||||  ##
+        #############################################################################################################################################
+
+        ...Creation.
+
+    -->
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-gJWVjz180MvwCrGGkC4xE5FjhWkTxHIR/+GgT8j2B3KKMgh6waEjPgzzh7lL7JZT" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+</head>
+<body style="height: 100vh;">
+    <!-- Content -->
+    <div class="container-fluid h-100" style="height: 100vh; text-shadow: 2px 2px #333;">
+        <div class="row text-center h-100" style="height: 100vh;">
+            <div class="col" style="background-image: linear-gradient(#0AFF78, #019387); color: white;  display: flex; align-items: center; justify-content: center;">
+                <!-- <h1>TZ1</h1> -->
+                <div id="primaryTimezoneMinusFour"></div>
+                <!-- <span class="btn btn-primary" onclick="CurrentTime();"></span> -->
+            </div>
+            <div class="col" style="background-image: linear-gradient(#3C61E7, #7A59F2); color: white;  display: flex; align-items: center; justify-content: center;">
+                <div id="primaryTimezoneMinusTwo"></div>
+            </div>
+            <div class="col alert-danger" style="background-image: linear-gradient(#703BBD, #D03E6F); color: white;  display: flex; align-items: center; justify-content: center;">
+                <div id="primaryTimezoneMinusOne"></div>
+            </div>
+            <div class="col alert-danger" style="background-image: linear-gradient(#1e69de, #75B7FF); color: white;  display: flex; align-items: center; justify-content: center;">
+                <div id="primaryTimezone"></div>
+            </div>
+            <div class="col alert-danger" style="background-image: linear-gradient(#FF7700, #FFA800); color: white;  display: flex; align-items: center; justify-content: center;">
+                <div id="primaryTimezonePlusOne"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap/jQuery/etc -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+    <!-- Timezone Script -->
+    <script type="text/javascript">
+        // Initialize static array vars with known data
+        var dayOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        var monthOfYear = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+        var availableTimezones = ["UTC Coordinated Universal Time", "UTC-1:00", "UTC-2:00", "UTC-3:00", "UTC-4:00", "EST<br>(UTC-5:00)", "CST<br>(UTC-6:00)", "MST<br>(UTC-7:00)", "PST<br>(UTC-8:00)", "Alaska<br>(UTC-9:00)", "Hawaii<br>(UTC-10:00)"];
+
+        //Function to handle time.
+        function CurrentTime(){
+
+            //Initialize vars w/date info.
+            var today = new Date(); //Instantiate a new date.
+            var currentDay = today.getDay(), currentDate = today.getDate(), currentMonth = today.getMonth(), currentYear = today.getFullYear();
+            var currentHour = today.getHours(), currentMins = today.getMinutes(), currentSecs = today.getSeconds(), timeOfDay;
+            var userTimeZoneOffset = today.getTimezoneOffset() / 60;
+
+            //Determine Time of Day & change 24 hr format to 12 hr based on current hour.
+            if(currentHour >= 0 && currentHour < 12){
+                timeOfDay = "AM";
+            }else if(currentHour >= 12){
+                timeOfDay = "PM";
+
+                if(currentHour > 12){
+                    currentHour -= 12; //24 hour format.
+                }
+            }
+
+            //Format mins/secs under 10
+            if(currentMins < 10){
+                currentMins = "0" + currentMins;
+            }else if(currentSecs < 10){
+                currentSecs = "0" + currentSecs;
+            }
+
+            //Produce dataset based on params
+            function TimezoneHourOffset(offset, direction){
+
+                //Initialize accumulators
+                var timezoneHourOffsetData = [];
+                var tempHour = currentHour;
+
+                //Check offset for correction.
+                if(direction == "none"){
+                    //Add time to first element
+                    timezoneHourOffsetData.push(tempHour);
+                    //Add time of day as second element.
+                    timezoneHourOffsetData.push(timeOfDay);
+                    //Add Timezone as third element.
+                    timezoneHourOffsetData.push(availableTimezones[userTimeZoneOffset]);
+                }else if(direction == "plus"){
+
+                    //Test for time going below the value of 1, meaning it crosses time of day & needs 12 hrs added to prevent math going into the negative.
+                    if(tempHour + offset > 12){
+                        //Add time to first element
+                        timezoneHourOffsetData.push(tempHour + offset - 12);
+
+                        //Inverse timezones.
+                        if(timeOfDay == "AM"){
+                            timezoneHourOffsetData.push("PM");
+                        }else{
+                            timezoneHourOffsetData.push("AM");
+                        }
+                    }else{
+                        //Add time to first element
+                        timezoneHourOffsetData.push(tempHour + offset);
+
+                        //Add standard time of day as second element.
+                        timezoneHourOffsetData.push(timeOfDay);
+                    }
+
+                    //Add Timezone as third element.
+                    timezoneHourOffsetData.push(availableTimezones[userTimeZoneOffset - offset]);
+                }else if(direction == "minus"){
+
+                    //Test for time going below the value of 1, meaning it crosses time of day & needs 12 hrs added to prevent math going into the negative.
+                    if(tempHour - offset < 1){
+                        //Add time to first element
+                        timezoneHourOffsetData.push(tempHour - offset + 12);
+
+                        //Inverse timezones.
+                        if(timeOfDay == "AM"){
+                            timezoneHourOffsetData.push("PM");
+                        }else{
+                            timezoneHourOffsetData.push("AM");
+                        }
+                    }else{
+                        //Add time to first element
+                        timezoneHourOffsetData.push(tempHour - offset);
+
+                        //Add standard time of day as second element.
+                        timezoneHourOffsetData.push(timeOfDay);
+                    }
+
+                    //Add Timezone as third element.
+                    timezoneHourOffsetData.push(availableTimezones[userTimeZoneOffset + offset]);
+                }
+
+                return timezoneHourOffsetData;
+            }
+
+            //Clock text - tie everything together & load the HTML per timezone wanted.
+            var primaryDisplayData = TimezoneHourOffset(0, "none");
+            var primaryDisplayText = "<h4 class=\"pt-4 mt-3 font-weight-bold\">" + primaryDisplayData[2] + "</h4><hr style=\"background-color: #FFF;\"><h1>" + currentHour + ":" + currentMins + ":" + currentSecs + " " + timeOfDay + "</h1><hr style=\"background-color: #FFF;\"><h4>Today is</h4><h3 style=\"color: #fff205;\">" + dayOfWeek[currentDay] + "</h3><h6 class=\"font-weight-bold\">" + (currentMonth + 1) + " . " + currentDate + " . " + currentYear + "</h6>";
+            var primaryDisplayData = TimezoneHourOffset(1, "plus");
+            var primaryDisplayTextPlusOne = "<h4 class=\"font-weight-bold\">" + primaryDisplayData[2] + "</h4><hr style=\"background-color: #FFF;\"><h1>" + primaryDisplayData[0] + ":" + currentMins + ":" + currentSecs + " " + primaryDisplayData[1] + "</h1><hr style=\"background-color: #FFF;\"><br><br><br>";
+            var primaryDisplayData = TimezoneHourOffset(1, "minus");
+            var primaryDisplayTextMinusOne = "<h4 class=\"font-weight-bold\">" + primaryDisplayData[2] + "</h4><hr style=\"background-color: #FFF;\"><h1>" + primaryDisplayData[0] + ":" + currentMins + ":" + currentSecs + " " + primaryDisplayData[1] + "</h1><hr style=\"background-color: #FFF;\"><br><br><br>";
+            var primaryDisplayData = TimezoneHourOffset(2, "minus");
+            var primaryDisplayTextMinusTwo = "<h4 class=\"font-weight-bold\">" + primaryDisplayData[2] + "</h4><hr style=\"background-color: #FFF;\"><h1>" + primaryDisplayData[0] + ":" + currentMins + ":" + currentSecs + " " + primaryDisplayData[1] + "</h1><hr style=\"background-color: #FFF;\"><br><br><br>";
+            var primaryDisplayData = TimezoneHourOffset(4, "minus");
+            var primaryDisplayTextMinusFour = "<h4 class=\"font-weight-bold\">" + primaryDisplayData[2] + "</h4><hr style=\"background-color: #FFF;\"><h1>" + primaryDisplayData[0] + ":" + currentMins + ":" + currentSecs + " " + primaryDisplayData[1] + "</h1><hr style=\"background-color: #FFF;\"><br><br><br>";
+
+            //Update Primary html
+            document.getElementById("primaryTimezone").innerHTML = primaryDisplayText;
+            document.getElementById("primaryTimezonePlusOne").innerHTML = primaryDisplayTextPlusOne;
+            document.getElementById("primaryTimezoneMinusOne").innerHTML = primaryDisplayTextMinusOne;
+            document.getElementById("primaryTimezoneMinusTwo").innerHTML = primaryDisplayTextMinusTwo;
+            document.getElementById("primaryTimezoneMinusFour").innerHTML = primaryDisplayTextMinusFour;
+
+
+        }
+
+        //Call clock function.
+        CurrentTime();
+
+        //Repeat the function every second - as to appear as a running clock.
+        setInterval(CurrentTime, 1000);
+
+    </script>
+</body>
+</html>
