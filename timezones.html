@@ -137,7 +137,7 @@
                         timezoneHourOffsetData.push(tempHour - offset + 12);
 
                         //Inverse timezones.
-                        if(timeOfDay == "AM"){
+                        if(timeOfDay == "AM" && (tempHour - offset + 12) != 12){
                             timezoneHourOffsetData.push("PM");
                         }else{
                             timezoneHourOffsetData.push("AM");

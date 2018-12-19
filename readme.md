@@ -1,6 +1,6 @@
 ## About Gradient Timezones
 
-This tool shows a variety of timezones in various gradients. This tool was inspired by the Chrome plugin: [Figure it Out](https://chrome.google.com/webstore/detail/figure-it-out/lialghmkggocekkpjbnoacohodmckfke?hl=en-US). It makes a great local home page and is written in HTML/JavaScript using css/bootstrap for stylizing.
+This tool shows a variety of timezones in various gradients. This tool was inspired by the Chrome plugin: [Figure it Out](https://chrome.google.com/webstore/detail/figure-it-out/lialghmkggocekkpjbnoacohodmckfke?hl=en-US). It makes a great local home page and is written in HTML/JavaScript using css/bootstrap for stylizing. The tool is complete in the sense that it works/provides me with the view that I need for my job. To get the "ideal view" - you will need to set your computer time to Central Standard Time. The groundwork however is there to expand out & customize for your particular requirements/needs.
 
 
 ## Why This Tool Exists
